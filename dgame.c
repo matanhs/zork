@@ -15,7 +15,7 @@ extern int strcmp P((const char *, const char *));
 static logical xvehic_ P((integer));
 static void xendmv_ P((logical));
 
-void game_()
+void game_step(char linebuff[78])
 {
     /* Local variables */
     logical f;
@@ -23,9 +23,9 @@ void game_()
 
 /* START UP, DESCRIBE CURRENT LOCATION. */
 
-    rspeak_(1);
+    //rspeak_(1);
 /* 						!WELCOME ABOARD. */
-    f = rmdesc_(3);
+    //f = rmdesc_(3);
 /* 						!START GAME. */
 
 /* NOW LOOP, READING AND EXECUTING COMMANDS. */
@@ -36,12 +36,13 @@ L100:
     play_1.telflg = FALSE_;
 /* 						!ASSUME NOTHING TOLD. */
     if (prsvec_1.prscon <= 1) {
-	rdline_(input_1.inbuf, 1);
+	//rdline_(linebuff, 1);
+
     }
 
 #ifdef ALLOW_GDT
 
-    if (strcmp(input_1.inbuf + prsvec_1.prscon - 1, "GDT") == 0) {
+    if (strcmp(linebuff + prsvec_1.prscon - 1, "GDT") == 0) {
 /* 						!CALL ON GDT? */
 	gdt_();
 /* 						!YES, INVOKE. */
@@ -52,7 +53,7 @@ L100:
 #endif /* ALLOW_GDT */
 
     ++state_1.moves;
-    prsvec_1.prswon = parse_(input_1.inbuf, 1);
+    prsvec_1.prswon = parse_(linebuff, 1);
     if (! prsvec_1.prswon) {
 	goto L400;
     }
@@ -86,8 +87,7 @@ L400:
     if (! lit_(play_1.here)) {
 	prsvec_1.prscon = 1;
     }
-    goto L100;
-
+    return;
 L900:
     valuac_(oindex_1.valua);
     goto L350;
@@ -97,10 +97,10 @@ L900:
 /* IF INPUT IS NOT 'ECHO' OR A DIRECTION, JUST ECHO. */
 
 L1000:
-    rdline_(input_1.inbuf, 0);
+    rdline_(linebuff, 0);
     ++state_1.moves;
 /* 						!CHARGE FOR MOVES. */
-    if (strcmp(input_1.inbuf, "ECHO") != 0)
+    if (strcmp(linebuff, "ECHO") != 0)
 	goto L1300;
 
     rspeak_(571);
@@ -114,7 +114,7 @@ L1000:
     goto L400;
 
 L1300:
-    prsvec_1.prswon = parse_(input_1.inbuf, 0);
+    prsvec_1.prswon = parse_(linebuff, 0);
     if (! prsvec_1.prswon || prsvec_1.prsa != vindex_1.walkw) {
 	goto L1400;
     }
@@ -124,7 +124,7 @@ L1300:
 /* 						!VALID EXIT? */
 
 L1400:
-    more_output(input_1.inbuf);
+    more_output(linebuff);
     play_1.telflg = TRUE_;
 /* 						!INDICATE OUTPUT. */
     goto L1000;
@@ -152,7 +152,7 @@ L2100:
 	goto L2700;
     }
 /* 						!ANY INPUT? */
-    if (parse_(input_1.inbuf, 1)) {
+    if (parse_(linebuff, 1)) {
 	goto L2150;
     }
 L2700:

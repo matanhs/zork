@@ -61,7 +61,7 @@ extern void
 	encryp_ P((const char *, char *)),
 	exit_ P((void)),
 	fightd_ P((void)),
-	game_ P((void)),
+	game_step P((char*)),
 	gdt_ P((void)),
 	gttime_ P((integer *)),
 	invent_ P((integer)),

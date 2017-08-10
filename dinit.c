@@ -432,6 +432,10 @@ L10000:
     play_1.here = advs_1.aroom[play_1.winner - 1];
     hack_1.thfpos = objcts_1.oroom[oindex_1.thief - 1];
     state_1.bloc = objcts_1.oroom[oindex_1.ballo - 1];
+    // DESCRIBE CURRENT LOCATION
+    rspeak_(1);
+    // START THE GAME
+    rmdesc_(3);
     ret_val = TRUE_;
 
     return ret_val;

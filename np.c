@@ -35,7 +35,7 @@ L10:
 L90:
     (void) fflush(stdout);
     if (fgets(buffer, 78, stdin) == NULL)
-	exit_();
+	  exit_();
     more_input();
 
     if (buffer[0] == '!') {

@@ -42,7 +42,7 @@ TERMFLAG =
 # Uncomment the following line if you want to have access to the game
 # debugging tool.  This is invoked by typing "gdt".  It is not much
 # use except for debugging.
-GDTFLAG = -DALLOW_GDT
+#GDTFLAG = -DALLOW_GDT
 
 # Compilation flags
 CFLAGS = -g #-static
@@ -65,7 +65,7 @@ OBJS =	actors.o ballop.o clockr.o demons.o dgame.o dinit.o dmain.o\
 	dverb2.o gdt.o lightp.o local.o nobjs.o np.o np1.o np2.o np3.o\
 	nrooms.o objcts.o rooms.o sobjs.o supp.o sverbs.o verbs.o villns.o
 
-dungeon: $(OBJS) dtextc.dat
+all: $(OBJS) dtextc.dat
 	$(CC) $(CFLAGS) -o zork $(OBJS) $(LIBS)
 
 install: zork dtextc.dat
