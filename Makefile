@@ -45,7 +45,7 @@ TERMFLAG =
 #GDTFLAG = -DALLOW_GDT
 
 # Compilation flags
-CFLAGS = -g #-static
+CFLAGS = -g3 #-static
 # On SCO Unix Development System 3.2.2a, the const type qualifier does
 # not work correctly when using cc.  The following line will cause it
 # to not be used and should be uncommented.
