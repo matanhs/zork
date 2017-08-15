@@ -43,6 +43,8 @@ typedef int logical;
 #define abs(x) ((x) >= 0 ? (x) : -(x))
 #define min(a,b) ((a) <= (b) ? (a) : (b))
 #define max(a,b) ((a) >= (b) ? (a) : (b))
+#define PRSTAT	\
+	printf("lives = %d moves = %d score = %d\n",2-state_.deaths, state_.moves, state_.rwscor);
 
 extern logical
 	protected P((void)),
