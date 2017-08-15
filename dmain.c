@@ -3,8 +3,11 @@
 /*COPYRIGHT 1980, INFOCOM COMPUTERS AND COMMUNICATIONS, CAMBRIDGE MA. 02142*/
 /* ALL RIGHTS RESERVED, COMMERCIAL USAGE STRICTLY PROHIBITED */
 /* WRITTEN BY R. M. SUPNIK */
+#ifndef LUA
+
 #include<stdio.h>
 #include<assert.h>
+
 #define EXTERN
 #define INIT
 
@@ -40,3 +43,4 @@ int main(int argc,char **argv) {
     exit_();
 /* 						!DONE */
 } /* MAIN__ */
+#endif

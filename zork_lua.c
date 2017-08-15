@@ -3,6 +3,7 @@
 /*COPYRIGHT 1980, INFOCOM COMPUTERS AND COMMUNICATIONS, CAMBRIDGE MA. 02142*/
 /* ALL RIGHTS RESERVED, COMMERCIAL USAGE STRICTLY PROHIBITED */
 /* WRITTEN BY R. M. SUPNIK */
+#ifdef LUA
 #include<stdio.h>
 #define EXTERN
 #define INIT
@@ -52,7 +53,7 @@ int zorkInit(lua_State *L) {
 }
 
 int zorkGameStep(lua_State *L) {
-	char* command = lua_tostring(L, 1);
+	char* command = (char*) lua_tostring(L, 1);
 	stringToUpper(command); //assume null terminated string from lua state
 	switchStdout("game_message.txt");
 	game_step(command);
@@ -107,3 +108,5 @@ int luaopen_zork(lua_State *L) {
 	luaL_newlib(L, fns);
 	return 1;
 }
+
+#endif

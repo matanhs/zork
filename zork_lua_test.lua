@@ -9,7 +9,7 @@ local function read_file(path)
 end
 
 print ("start zork test in lua")
-zork = require 'zork';
+zork = require 'zork'
 print ("zork module loaded")
 local result_file_name = zork.zorkInit();
 print ("zork Init returned")
