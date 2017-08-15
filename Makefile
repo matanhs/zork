@@ -60,13 +60,16 @@ CSRC =	actors.c ballop.c clockr.c demons.c dgame.c dinit.c dmain.c\
 	nrooms.c objcts.c rooms.c sobjs.c supp.c sverbs.c verbs.c villns.c
 
 # Object files
-OBJS =	actors.o ballop.o clockr.o demons.o dgame.o dinit.o dmain.o\
+OBJS =	actors.o ballop.o clockr.o demons.o dinit.o dmain.o\
 	dso1.o dso2.o dso3.o dso4.o dso5.o dso6.o dso7.o dsub.o dverb1.o\
 	dverb2.o gdt.o lightp.o local.o nobjs.o np.o np1.o np2.o np3.o\
 	nrooms.o objcts.o rooms.o sobjs.o supp.o sverbs.o verbs.o villns.o
 
-all: $(OBJS) dtextc.dat
+all: $(OBJS) dgame.o dtextc.dat
 	$(CC) $(CFLAGS) -o zork $(OBJS) $(LIBS)
+
+forlua: $(OBJS) dtextc.dat
+	$(CC) -DLUA -O3 -bundle -undefined dynamic_lookup -o zork.so $(OBJS) $(LIBS)
 
 install: zork dtextc.dat
 	mkdir -p $(BINDIR) $(LIBDIR) $(MANDIR)/man6
