@@ -68,8 +68,11 @@ OBJS =	actors.o ballop.o clockr.o dgame.o demons.o dinit.o \
 all: $(OBJS) dtextc.dat
 	$(CC) $(CFLAGS) -o zork $(OBJS) $(LIBS) dmain.c
 
-forlua: $(OBJS) dtextc.dat
+forluaclang: $(OBJS) dtextc.dat
 	$(CC) zork_lua.c  -DLUA -O3 -bundle -undefined dynamic_lookup -o zork.so $(OBJS) $(LIBS) 
+
+forluagcc: $(OBJS) dtextc.dat
+	$(CC) zork_lua.c  -DLUA -DLUAJIT -O3 -shared -dynamic -fPIC -o zork.so $(OBJS) $(LIBS) 
 
 install: zork dtextc.dat
 	mkdir -p $(BINDIR) $(LIBDIR) $(MANDIR)/man6

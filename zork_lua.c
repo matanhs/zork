@@ -15,10 +15,10 @@
 #include "lua.h"
 #include "lauxlib.h"
 
- void stringToUpper(char *str) {
+void stringToUpper(char *str) {
 	while (*str != '\0') {
 		if(islower((int)*str))
-			*str = toupper((int)*str);
+		*str = toupper((int)*str);
 		++str;
 	}
 }
@@ -28,20 +28,20 @@ static fpos_t pos;
 
 static void switchStdout(const char *newStream)
 {
-  fflush(stdout);
-  fgetpos(stdout, &pos);
-  fd = dup(fileno(stdout));
-  if( freopen(newStream, "w", stdout)==NULL)
-  	exit_();
+	fflush(stdout);
+	fgetpos(stdout, &pos);
+	fd = dup(fileno(stdout));
+	if(freopen(newStream, "w", stdout) == NULL)
+	exit_();
 }
 
 static void revertStdout()
 {
-  fflush(stdout);
-  dup2(fd, fileno(stdout));
-  close(fd);
-  clearerr(stdout);
-  fsetpos(stdout, &pos);
+	fflush(stdout);
+	dup2(fd, fileno(stdout));
+	close(fd);
+	clearerr(stdout);
+	fsetpos(stdout, &pos);
 }
 
 int zorkInit(lua_State *L) {
@@ -63,13 +63,13 @@ int zorkGameStep(lua_State *L) {
 }
 
 int zorkInventory(lua_State *L) {
-		switchStdout("inventory_message.txt");
-		game_step("INVENTORY\0");
-		--state_.moves; // reduce step penalty
-		revertStdout();
-		lua_pushstring(L, "inventory_message.txt"); //return output file name
-		return 1;
-	}
+	switchStdout("inventory_message.txt");
+	game_step("INVENTORY\0");
+	--state_.moves; // reduce step penalty
+	revertStdout();
+	lua_pushstring(L, "inventory_message.txt");//return output file name
+	return 1;
+}
 
 int zorkGetScore(lua_State *L) {
 	lua_pushinteger(L, state_.rwscor);
@@ -92,20 +92,24 @@ int zorkExit(lua_State *L) {
 }
 
 int luaopen_zork(lua_State *L) {
-	char str[]={"hi from c\n"};
+	char str[]= {"hi from c\n"};
 	printf("%s",str);
 
 	luaL_Reg fns[] = {
-			{"zorkInit",zorkInit},
-			{"zorkGameStep",zorkGameStep},
-			{"zorkGetScore",zorkGetScore},
-			{"zorkGetLives",zorkGetLives},
-			{"zorkGetNumMoves",zorkGetNumMoves},
-			{"zorkInventory",zorkInventory},
-			{"zorkExit",zorkExit},
-			{NULL,NULL}
+		{	"zorkInit",zorkInit},
+		{	"zorkGameStep",zorkGameStep},
+		{	"zorkGetScore",zorkGetScore},
+		{	"zorkGetLives",zorkGetLives},
+		{	"zorkGetNumMoves",zorkGetNumMoves},
+		{	"zorkInventory",zorkInventory},
+		{	"zorkExit",zorkExit},
+		{	NULL,NULL}
 	};
-	luaL_newlib(L, fns);
+#ifdef LUAJIT // lua  5.1
+	luaL_register(L,"zork", fns);
+#else // lua 5.3
+	LuaL_newlib(L, fns);
+#endif
 	return 1;
 }
 
