@@ -66,7 +66,7 @@ OBJS =	actors.o ballop.o clockr.o dgame.o demons.o dinit.o \
 	nrooms.o objcts.o rooms.o sobjs.o supp.o sverbs.o verbs.o villns.o
 
 all: $(OBJS) dtextc.dat
-	$(CC) $(CFLAGS) -o zork $(OBJS) $(LIBS) dmain.o dmain.c
+	$(CC) $(CFLAGS) -o zork $(OBJS) $(LIBS) dmain.c
 
 forlua: $(OBJS) dtextc.dat
 	$(CC) zork_lua.c  -DLUA -O3 -bundle -undefined dynamic_lookup -o zork.so $(OBJS) $(LIBS) 
