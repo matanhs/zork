@@ -45,7 +45,7 @@ TERMFLAG =
 #GDTFLAG = -DALLOW_GDT
 
 # Compilation flags
-CFLAGS = -g3 #-static
+CFLAGS = -fPIC #-static
 # On SCO Unix Development System 3.2.2a, the const type qualifier does
 # not work correctly when using cc.  The following line will cause it
 # to not be used and should be uncommented.
@@ -68,11 +68,11 @@ OBJS =	actors.o ballop.o clockr.o dgame.o demons.o dinit.o \
 all: $(OBJS) dtextc.dat
 	$(CC) $(CFLAGS) -o zork $(OBJS) $(LIBS) dmain.c
 
-forluaclang: $(OBJS) dtextc.dat
-	$(CC) zork_lua.c  -DLUA -O3 -bundle -undefined dynamic_lookup -o zork.so $(OBJS) $(LIBS) 
+forluamac: $(OBJS) dtextc.dat
+	$(CC) zork_lua.c -DLUA -O3 -bundle -undefined dynamic_lookup -o zork.so $(OBJS) $(LIBS)
 
-forluagcc: $(OBJS) dtextc.dat
-	$(CC) zork_lua.c  -DLUA -DLUAJIT -O3 -shared -dynamic -fPIC -o zork.so $(OBJS) $(LIBS) 
+forlualinux:  $(OBJS) zork_lua.o dtextc.dat
+	gcc -O -shared $(OBJS) zork_lua.o -fPIC -o zork.so
 
 install: zork dtextc.dat
 	mkdir -p $(BINDIR) $(LIBDIR) $(MANDIR)/man6
@@ -81,10 +81,13 @@ install: zork dtextc.dat
 	cp dungeon.6 $(MANDIR)/man6/
 
 clean:
-	rm -f $(OBJS) zork core dsave.dat *~
+	rm -f $(OBJS) zork zork.o zork_lua.o core dsave.dat *~
 
 dtextc.dat:
 	cat dtextc.uu1 dtextc.uu2 dtextc.uu3 dtextc.uu4 | uudecode
+
+zork_lua.o: dgame.o zork_lua.c funcs.h vars.h
+	gcc -O2 -DLUA -DLUAJIT -c -fPIC zork_lua.c
 
 dinit.o: dinit.c funcs.h vars.h
 	$(CC) $(CFLAGS) $(GDTFLAG) -DTEXTFILE=\"$(DATADIR)/dtextc.dat\" -c dinit.c
@@ -99,7 +102,7 @@ local.o: local.c funcs.h vars.h
 	$(CC) $(CFLAGS) $(GDTFLAG) -c local.c
 
 supp.o: supp.c funcs.h vars.h
-	$(CC) $(CFLAGS) $(TERMFLAG) -c supp.c	
+	$(CC) $(CFLAGS) $(TERMFLAG) -c supp.c
 
 actors.o: funcs.h vars.h
 ballop.o: funcs.h vars.h

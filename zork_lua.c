@@ -1,12 +1,7 @@
-/* DUNGEON-- MAIN PROGRAM */
-
-/*COPYRIGHT 1980, INFOCOM COMPUTERS AND COMMUNICATIONS, CAMBRIDGE MA. 02142*/
-/* ALL RIGHTS RESERVED, COMMERCIAL USAGE STRICTLY PROHIBITED */
-/* WRITTEN BY R. M. SUPNIK */
 #ifdef LUA
-#include<stdio.h>
 #define EXTERN
 #define INIT
+#include<stdio.h>
 #include "funcs.h"
 #include "vars.h"
 #define PRSTAT	\
@@ -94,7 +89,6 @@ int zorkExit(lua_State *L) {
 int luaopen_zork(lua_State *L) {
 	char str[]= {"hi from c\n"};
 	printf("%s",str);
-
 	luaL_Reg fns[] = {
 		{	"zorkInit",zorkInit},
 		{	"zorkGameStep",zorkGameStep},
@@ -102,13 +96,13 @@ int luaopen_zork(lua_State *L) {
 		{	"zorkGetLives",zorkGetLives},
 		{	"zorkGetNumMoves",zorkGetNumMoves},
 		{	"zorkInventory",zorkInventory},
-		{	"zorkExit",zorkExit},
+		{	"zorkExit",zorkExit}, 
 		{	NULL,NULL}
 	};
 #ifdef LUAJIT // lua  5.1
 	luaL_register(L,"zork", fns);
 #else // lua 5.3
-	LuaL_newlib(L, fns);
+	luaL_newlib(L, fns);
 #endif
 	return 1;
 }
