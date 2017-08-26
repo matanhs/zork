@@ -18,26 +18,21 @@
 
 
 int main(int argc,char **argv) {
+int i;
 /* 1) INITIALIZE DATA STRUCTURES */
 /* 2) PLAY GAME */
-	char string[BUFSIZ];
-
-	FILE* out = freopen("game_output.txt", "w", stdout);
-	if (out==NULL) exit_();
-
-	setbuf(stdout, string);
 	// all output is redirected to the file
 	if (init_()) {
-    	game_step("OPEN MAILBOX\0");
-    	game_step("READ LEAFLET\0");
-    	game_step("N\0");
-    	game_step("N\0");
-    	game_step("CLIMB THE TREE\0");
-    	game_step("TAKE EGG\0");
-    	PRSTAT
-	init_();
-    	PRSTAT
-    fclose(out);
+		for (i=0;i<100000;i++){
+			game_step("OPEN MAILBOX");
+		    	game_step("N");
+		    	game_step("N");
+		    	game_step("CLIMB THE TREE");
+		    	game_step("TAKE EGG");
+		    	PRSTAT
+			printf("loop: %d\n",i);
+			init_();
+		}
 	}
 /* 						!IF INIT, PLAY GAME. */
     exit_();

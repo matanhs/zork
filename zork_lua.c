@@ -26,8 +26,10 @@ static void switchStdout(const char *newStream)
 	fflush(stdout);
 	fgetpos(stdout, &pos);
 	fd = dup(fileno(stdout));
-	if(freopen(newStream, "w", stdout) == NULL)
-	exit_();
+	if(freopen(newStream, "w", stdout) == NULL){
+		printf(stderr,"error opening stream %s\n",newStream);
+		exit(0);
+	}
 }
 
 static void revertStdout()
@@ -87,7 +89,7 @@ int zorkExit(lua_State *L) {
 }
 
 int luaopen_zork(lua_State *L) {
-	char str[]= {"hi from c\n"};
+	char str[]= {"zork c init SUCCESSFUL\n"};
 	printf("%s",str);
 	luaL_Reg fns[] = {
 		{	"zorkInit",zorkInit},
@@ -96,7 +98,7 @@ int luaopen_zork(lua_State *L) {
 		{	"zorkGetLives",zorkGetLives},
 		{	"zorkGetNumMoves",zorkGetNumMoves},
 		{	"zorkInventory",zorkInventory},
-		{	"zorkExit",zorkExit}, 
+		{	"zorkExit",zorkExit},
 		{	NULL,NULL}
 	};
 #ifdef LUAJIT // lua  5.1
