@@ -164,6 +164,7 @@ L18200:
     }
     rspsub_(358, odo2);
 /* 						!NOT READABLE. */
+    ret_val= FALSE_;
     return ret_val;
 
 L18300:

@@ -63,7 +63,6 @@ extern void
 	encryp_ P((const char *, char *)),
 	exit_ P((void)),
 	fightd_ P((void)),
-	game_step P((char*)),
 	gdt_ P((void)),
 	gttime_ P((integer *)),
 	invent_ P((integer)),
@@ -85,7 +84,8 @@ extern void
 	thiefd_ P((void)),
 	valuac_ P((integer));
 extern integer
-	blow_ P((integer, integer, integer, logical, integer)),
+game_step P((char*)),
+blow_ P((integer, integer, integer, logical, integer)),
 	fights_ P((integer, logical)),
 	fwim_ P((integer, integer, integer, integer, integer, logical)),
 	getobj_ P((integer, integer, integer)),

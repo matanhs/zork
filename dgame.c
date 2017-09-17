@@ -15,12 +15,12 @@ extern int strcmp P((const char *, const char *));
 static logical xvehic_ P((integer));
 static void xendmv_ P((logical));
 
-void game_step(char linebuff[78])
+int game_step(char linebuff[78])
 {
     /* Local variables */
     logical f;
     integer i;
-
+    logical bad = FALSE_;
 /* START UP, DESCRIBE CURRENT LOCATION. */
 
     //rspeak_(1);
@@ -71,8 +71,9 @@ L300:
     if (prsvec_1.prso == oindex_1.valua || prsvec_1.prso == oindex_1.every) {
 	goto L900;
     }
-    if (! vappli_(prsvec_1.prsa)) {
-	goto L400;
+    bad = !vappli_(prsvec_1.prsa);
+    if (bad) {
+    	goto L400;
     }
 /* 						!VERB OK? */
 L350:
@@ -87,7 +88,7 @@ L400:
     if (! lit_(play_1.here)) {
 	prsvec_1.prscon = 1;
     }
-    return;
+    return bad || !prsvec_1.prswon ;
 L900:
     valuac_(oindex_1.valua);
     goto L350;
