@@ -23,19 +23,7 @@ int main(int argc, char **argv) {
 	char buff[1024];
 	if (init_()) {
 		for (i = 0; i < 10000; i++) {
-			/*
-			 *
-			 game_step("OPEN MAILBOX\0");
-			game_step("N\0");
-			game_step("N\0");
-			game_step("CLIMB THE TREE\0");
-			game_step("TAKE EGG\0");
-			PRSTAT
-			init_();
-			printf("inits = %d\n",i);
-			*/
 			rdline_(buff,1);
-			//printf ("%d\n",parse_(buff,1));
 			bad_parse = game_step(buff);
 			printf("bad parse command? %d\naction index: %d\nobject index: %d\ninstrument index %d\n",bad_parse, prsvec_.prsa,prsvec_.prso,prsvec_.prsi);
 		}

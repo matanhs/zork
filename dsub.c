@@ -82,7 +82,7 @@ logical nl;
     x = ((- x) - 1) * 8;
     if (fseek(dbfile, x + (long)rmsg_1.mrloc, SEEK_SET) == EOF) {
 	fprintf(stderr, "Error seeking database loc %d\n", x);
-	exit_();
+	exit(0);
     }
 
     if (nl)
@@ -94,7 +94,7 @@ logical nl;
 	i = getc(dbfile);
 	if (i == EOF) {
 	    fprintf(stderr, "Error reading database loc %d\n", x);
-	    exit_();
+	    exit(0);
 	}
 	i ^= zkey[x & 0xf] ^ (x & 0xff);
 	x = x + 1;
@@ -112,7 +112,7 @@ logical nl;
 	    rspsb2nl_(y, 0, 0, 0);
 	    if (fseek(dbfile, iloc, SEEK_SET) == EOF) {
 		fprintf(stderr, "Error seeking database loc %d\n", iloc);
-		exit_();
+		exit(0);
 	    }
 	    y = z;
 	    z = 0;
@@ -179,7 +179,7 @@ integer b;
     if (debug_1.dbgflg != 0) {
 	return;
     }
-    exit_();
+    exit(0);
 
 } /* bug_ */
 
@@ -413,23 +413,26 @@ L500:
 	;
     }
     return;
-
-/* CAN'T OR WON'T CONTINUE, CLEAN UP AND EXIT. */
+L900:
+L1000:
+L1100:
+++state_1.deaths;
+/* CAN'T OR WON'T CONTINUE, CLEAN UP AND EXIT.
 
 L900:
     rspeak_(625);
-/* 						!IN ENDGAME, LOSE. */
+// 						!IN ENDGAME, LOSE.
     goto L1100;
 
 L1000:
     rspeak_(7);
-/* 						!INVOLUNTARY EXIT. */
+// 						!INVOLUNTARY EXIT.
 L1100:
     score_(0);
-/* 						!TELL SCORE. */
+// 						!TELL SCORE.
     (void) fclose(dbfile);
-    exit_();
-
+    exit_(); // lose - endgame
+*/
 } /* jigsup_ */
 
 /* OACTOR-	GET ACTOR ASSOCIATED WITH OBJECT */

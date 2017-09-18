@@ -30,10 +30,11 @@ extern struct tm *localtime ();
 
 /* Terminate the game */
 
-void exit_()
+void exit_() // function declaration
 {
     fprintf(stderr, "The game is over.\n");
     exit(0);
+    return;
 }
 
 /* Get time in hours, minutes and seconds */
@@ -48,7 +49,7 @@ integer *secptr;
 
 	time(&timebuf);
 	tmptr = localtime(&timebuf);
-	
+
 	*hrptr  = tmptr->tm_hour;
 	*minptr = tmptr->tm_min;
 	*secptr = tmptr->tm_sec;

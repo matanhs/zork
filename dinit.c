@@ -17,7 +17,7 @@
 
 extern void srand P((unsigned int));
 
-FILE *dbfile;
+FILE *dbfile = NULL;
 
 #ifndef TEXTFILE
 #ifdef __AMOS__
@@ -127,7 +127,7 @@ logical init_()
     more_output("                    \"You shall not pass.\"");
     more_output("");
     more_output("As he grabs you by the neck all grows dim about you.");
-    exit_();
+    exit_(); // init failure
 
 /* NOW START INITIALIZATION PROPER */
 
@@ -333,7 +333,8 @@ L10000:
 /* INIT, PAGE 4 */
 
 /* NOW RESTORE FROM EXISTING INDEX FILE. */
-
+if (dbfile !=NULL)
+fclose(dbfile);
 #ifdef __AMOS__
     if ((dbfile = fdopen(ropen(LOCALTEXTFILE, 0), BINREAD)) == NULL &&
 	(dbfile = fdopen(ropen(TEXTFILE, 0), BINREAD)) == NULL)

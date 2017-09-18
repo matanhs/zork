@@ -217,7 +217,7 @@ L5000:
 L6000:
     i = 330;
 /* 						!ASSUME WATER. */
-    if ((rooms_1.rflag[play_1.here - 1] & RWATER + RFILL) == 
+    if ((rooms_1.rflag[play_1.here - 1] & RWATER + RFILL) ==
 	    0) {
 	i = rnd_(3) + 331;
     }
@@ -355,14 +355,14 @@ L14000:
 
 L15000:
     score_(1);
-/* 						!TELLL SCORE. */
+// 						!TELLL SCORE.
     if (! yesno_(343, 0, 0)) {
 	return ret_val;
     }
-/* 						!ASK FOR Y/N DECISION. */
-    exit_();
-/* 						!BYE. */
-/* SVERBS, PAGE 4 */
+// 						!ASK FOR Y/N DECISION.
+    exit_();  // exit by quit command
+// 						!BYE.
+// SVERBS, PAGE 4
 
 /* V85--	FOLLOW (USED IN ENDGAME) */
 
@@ -405,7 +405,7 @@ L17100:
 /* 						!ON OTHER SIDE OF SCOL? */
     for (i = 1; i <= 12; i += 3) {
 /* 						!WALK THRU PROPER WALL? */
-	if (screen_1.scolwl[i - 1] == play_1.here && screen_1.scolwl[i] == 
+	if (screen_1.scolwl[i - 1] == play_1.here && screen_1.scolwl[i] ==
 		prsvec_1.prso) {
 	    goto L17500;
 	}
@@ -489,7 +489,7 @@ L19100:
     return ret_val;
 
 L19200:
-    if (prsvec_1.prsi == oindex_1.putty && objcts_1.oadv[oindex_1.putty - 1] 
+    if (prsvec_1.prsi == oindex_1.putty && objcts_1.oadv[oindex_1.putty - 1]
 	    == play_1.winner) {
 	goto L19300;
     }
@@ -575,7 +575,7 @@ L22200:
 	goto L22300;
     }
 /* 						!DOWN EXIT? */
-    if (curxt_1.xtype == xpars_1.xno || curxt_1.xtype == xpars_1.xcond && ! 
+    if (curxt_1.xtype == xpars_1.xno || curxt_1.xtype == xpars_1.xcond && !
 	    flags[*xflag - 1]) {
 	goto L22400;
     }
@@ -790,7 +790,7 @@ L26800:
 /* V96--	ANSWER */
 
 L27000:
-    if (prsvec_1.prscon > 1 && play_1.here == rindex_1.fdoor && 
+    if (prsvec_1.prscon > 1 && play_1.here == rindex_1.fdoor &&
 	    findex_1.inqstf) {
 	goto L27100;
     }
