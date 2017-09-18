@@ -6,16 +6,25 @@
 #include "vars.h"
 #define PRSTAT	\
 	printf("lives = %d moves = %d score = %d\n",2-state_.deaths, state_.moves, state_.rwscor);
-
+#define BUFF_SIZE 78
+#ifdef LUAJIT // lua  5.1
 #include "lua.h"
 #include "lauxlib.h"
+#else
+#include "lua-5.3/lua.h"
+#include "lua-5.3/lauxlib.h"
+#endif // lua5.1
 
-void stringToUpper(char *str) {
-	while (*str != '\0') {
-		if(islower((int)*str))
-		*str = toupper((int)*str);
-		++str;
+void stringToUpper(char *str,char *dest) {
+	int i = 0;
+	while (str[i] != '\0' && i < BUFF_SIZE) {
+		if(islower((int)str[i]))
+			dest[i] = toupper((int)str[i]);
+		else
+			dest[i] = str[i];
+		++i;
 	}
+	dest[i] = '\0';
 }
 
 static int fd;
@@ -51,12 +60,14 @@ int zorkInit(lua_State *L) {
 
 int zorkGameStep(lua_State *L) {
 	char* command = (char*) lua_tostring(L, 1);
-	stringToUpper(command); //assume null terminated string from lua state
+	char buff[78];
+	stringToUpper(command,buff); //assume null terminated string from lua state
 	switchStdout("game_message.txt");
-	game_step(command);
+	int bad_command = game_step(buff);
 	revertStdout();
 	lua_pushstring(L, "game_message.txt");
-	return 1;
+	lua_pushnumber(L,bad_command);
+	return 2;
 }
 
 int zorkInventory(lua_State *L) {
