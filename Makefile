@@ -1,10 +1,10 @@
 # Makefile for dungeon
 
 # Where to install the program
-BINDIR = /usr/games
+BINDIR = 
 
 # Where to install the data file
-DATADIR = /usr/games/lib
+DATADIR = zork/
 
 # Where to install the man page
 MANDIR = /usr/share/man
@@ -73,6 +73,7 @@ forluamac: $(OBJS) dtextc.dat
 
 forlualinux:  $(OBJS) zork_lua.o dtextc.dat
 	gcc -O -shared $(OBJS) zork_lua.o -fPIC -o zork.so
+	cp zork.so dtextc.dat ../
 
 install: zork dtextc.dat
 	mkdir -p $(BINDIR) $(LIBDIR) $(MANDIR)/man6

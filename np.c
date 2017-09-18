@@ -34,8 +34,12 @@ L10:
 /* 						!PROMPT FOR GAME. */
 L90:
     (void) fflush(stdout);
-    if (fgets(buffer, 78, stdin) == NULL)
-	  exit_();
+    if (fgets(buffer, 78, stdin) == NULL){
+      fprintf(stderr, "null stdin.\n");
+      exit_(); // null stdin in parser
+
+      }
+
     more_input();
 
     if (buffer[0] == '!') {
