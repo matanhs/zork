@@ -70,6 +70,7 @@ all: $(OBJS) dtextc.dat
 
 forluamac: $(OBJS) dtextc.dat
 	$(CC) zork_lua.c -DLUA -O3 -bundle -undefined dynamic_lookup -o zork.so $(OBJS) $(LIBS)
+	cp zork.so dtextc.dat ../
 
 forlualinux:  $(OBJS) zork_lua.o dtextc.dat
 	gcc -O -shared $(OBJS) zork_lua.o -fPIC -o zork.so
